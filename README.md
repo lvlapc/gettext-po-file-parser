@@ -9,13 +9,24 @@ npm i gettext-po-file-parser
 
 ## Usage
 
+Including: 
+```
+const parse = require('gettext-po-file-parser');
+```
+
+Parse file content with function:
+```
+parse(poString[, parsePluralHeader]);
+```
+
+Example:
 ```
 const fs = require('fs');
 const parse = require('gettext-po-file-parser');
 
 const content = fs.readFileSync('path/to/file.po', 'utf8');
 
-let parsed = parse(content);
+let parsed = parse(content, true);
 
 console.dir(parsed); 
 //
@@ -26,10 +37,15 @@ console.dir(parsed);
             msgid : "Some message to translate",
             msgctxt : "ContextOfMessage",
             msgstr: [
-                "Translation", ...
+                "Translation", //...
             ]
         },
-        ...
-    ]
+        // ...
+    ],
+    plural : {
+        found: true,
+        count: 2,
+        fn: (n) => n
+    }
 };
 ```

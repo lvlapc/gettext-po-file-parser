@@ -1,4 +1,4 @@
-export default (text) => {
+export default (text, parsePluralHeader = false) => {
 
     //Cleaning text from line breaks (where they are not needed)
     //And normalizing escaped characters
@@ -21,6 +21,12 @@ export default (text) => {
     });
 
     let lastHeaderIndex = 0;
+
+    let pluralDefault = {
+        found: false,
+        count: 0,
+        fn: (n) => n
+    };
 
     const parserHeaders = (text) => {
         let regexp = /"([\w\-]*?):\s(.*?)[\r\n]{1,2}"/g;
@@ -62,8 +68,31 @@ export default (text) => {
         return messages;
     };
 
-    return {
-        headers: parserHeaders(text),
-        messages: parseMessages(text),
+    const parsePlurals = (text) => {
+        let regexpPlurals = /nplurals=(\d+);\splural=\(?([n%><=&|?!:\(\)\d\r\n\s]*?)\);/g;
+
+        let pluralData = regexpPlurals.exec(text);
+
+        if (pluralData === null) {
+            return pluralDefault;
+        }
+
+        return {
+            found: true,
+            count: parseInt(pluralData[1]),
+            fn: new Function(`return function(n){return ${pluralData[2]}}`)()
+        };
+    };
+
+    const headers = parserHeaders(text);
+
+    if (parsePluralHeader && typeof headers["plural-forms"] !== "undefined") {
+        pluralDefault = parsePlurals(headers["plural-forms"]);
     }
+
+    return {
+        headers,
+        messages: parseMessages(text),
+        plural: pluralDefault
+    };
 }
