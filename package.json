@@ -1,6 +1,6 @@
 {
   "name": "gettext-po-file-parser",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Parses gettext po file content",
   "main": "lib/index.js",
   "module": "es/index.js",
