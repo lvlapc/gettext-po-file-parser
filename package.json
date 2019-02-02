@@ -1,0 +1,38 @@
+{
+  "name": "gettext-po-file-parser",
+  "version": "1.0.0",
+  "description": "Parses gettext po file content",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.1.2",
+    "rollup-plugin-babel": "^4.3.2"
+  },
+  "scripts": {
+    "clean" : "rimraf es lib",
+    "prepublish": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lvlapc/gettext-po-file-parser.git"
+  },
+  "keywords": [
+    "gettext",
+    "po",
+    "po-file",
+    "po-parser"
+  ],
+  "author": "Sergey Gubarev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lvlapc/gettext-po-file-parser/issues"
+  },
+  "homepage": "https://github.com/lvlapc/gettext-po-file-parser#readme"
+}
